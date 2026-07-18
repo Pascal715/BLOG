@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance · IA · Économie — Pascal Dray</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F5F1;
+    --ink: #1B2D3E;
+    --ia: #4875D8;
+    --finance: #27935A;
+    --eco: #C96315;
+    --muted: #8A8780;
+    --border: #DDD9D2;
+    --card: #FFFFFF;
+    --radius: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: #fff;
+    border-bottom: 2px solid var(--ink);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0 56px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+
+  .site-logo em { font-style: normal; color: var(--eco); }
+
+  .site-nav { display: flex; gap: 32px; list-style: none; align-items: center; }
+  .site-nav a { font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none; transition: color .2s; }
+  .site-nav a:hover { color: var(--ink); }
+  .site-nav .nav-cta {
+    background: var(--ink); color: #fff !important;
+    padding: 7px 16px; border-radius: 100px; font-size: 13px; font-weight: 600;
+    transition: opacity .2s;
+  }
+  .site-nav .nav-cta:hover { opacity: .8; }
+
+  /* ── HERO ── */
+  .hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 72px 56px 40px;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--eco); margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(38px, 4.5vw, 68px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+
+  .hero-desc {
+    font-size: 17px; color: var(--muted); line-height: 1.65; max-width: 460px;
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-end;
+  }
+
+  .hero-badge {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .hero-badge-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .hero-badge-label { font-size: 13px; color: var(--muted); }
+
+  .hero-badge.accent-finance .hero-badge-num { color: var(--finance); }
+  .hero-badge.accent-eco .hero-badge-num { color: var(--eco); }
+  .hero-badge.accent-ia .hero-badge-num { color: var(--ia); }
+
+  /* ── FILTERS ── */
+  .filters-bar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 8px 56px 44px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .filters-label { font-size: 13px; color: var(--muted); margin-right: 4px; }
+
+  .filter-btn {
+    padding: 8px 18px;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all .2s;
+  }
+
+  .filter-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .filter-btn.active { color: #fff; }
+  .filter-btn.active[data-cat="tous"] { background: var(--ink); border-color: var(--ink); }
+  .filter-btn.active[data-cat="finance"] { background: var(--finance); border-color: var(--finance); }
+  .filter-btn.active[data-cat="eco"] { background: var(--eco); border-color: var(--eco); }
+  .filter-btn.active[data-cat="ia"] { background: var(--ia); border-color: var(--ia); }
+
+  /* ── FEATURED ── */
+  .featured-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 56px 44px;
+  }
+
+  .section-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--muted);
+    padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 24px;
+  }
+
+  .featured-card {
+    background: var(--ink);
+    border-radius: 14px;
+    padding: 52px;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 48px;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    border: none;
+    width: 100%;
+    text-align: left;
+  }
+
+  .featured-card:hover { transform: translateY(-3px); box-shadow: 0 20px 60px rgba(27,45,62,.25); }
+
+  .cat-pill {
+    display: inline-block;
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px; border-radius: 100px; margin-bottom: 20px;
+  }
+
+  .cat-pill.finance { background: rgba(39,147,90,.2); color: #5de0a0; }
+  .cat-pill.eco { background: rgba(201,99,21,.2); color: #f5a070; }
+  .cat-pill.ia { background: rgba(72,117,216,.2); color: #90b0f8; }
+
+  .featured-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px; font-weight: 800; line-height: 1.15;
+    color: #fff; margin-bottom: 16px; letter-spacing: -.5px;
+  }
+
+  .featured-excerpt { font-size: 16px; color: rgba(255,255,255,.55); line-height: 1.65; margin-bottom: 28px; }
+
+  .featured-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 600; color: rgba(255,255,255,.6);
+    transition: color .2s;
+  }
+
+  .featured-card:hover .featured-cta { color: #fff; }
+
+  .featured-aside { display: flex; align-items: center; justify-content: center; }
+
+  .big-glyph {
+    font-family: 'Syne', sans-serif;
+    font-size: 100px; font-weight: 800;
+    color: rgba(255,255,255,.06);
+    line-height: 1; user-select: none; text-align: center;
+    letter-spacing: -4px;
+  }
+
+  .big-glyph small {
+    display: block;
+    font-size: 14px; letter-spacing: 3px;
+    color: rgba(255,255,255,.18);
+    margin-top: -4px;
+  }
+
+  /* ── GRID ── */
+  .grid-section { max-width: 1200px; margin: 0 auto; padding: 0 56px 88px; }
+
+  .articles-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+
+  .article-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+  }
+
+  .article-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(27,45,62,.08); border-color: transparent; }
+  .article-card.finance { border-top-color: var(--finance); }
+  .article-card.eco { border-top-color: var(--eco); }
+  .article-card.ia { border-top-color: var(--ia); }
+
+  .cat-pill-sm {
+    display: inline-block;
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px; border-radius: 100px; margin-bottom: 16px;
+  }
+
+  .cat-pill-sm.finance { background: rgba(39,147,90,.1); color: var(--finance); }
+  .cat-pill-sm.eco { background: rgba(201,99,21,.1); color: var(--eco); }
+  .cat-pill-sm.ia { background: rgba(72,117,216,.1); color: var(--ia); }
+
+  .article-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px; font-weight: 700; line-height: 1.3;
+    color: var(--ink); margin-bottom: 10px; flex-grow: 1;
+  }
+
+  .article-excerpt { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+
+  .article-footer {
+    border-top: 1px solid var(--border); padding-top: 16px;
+    display: flex; justify-content: space-between; align-items: center; margin-top: auto;
+  }
+
+  .article-date { font-size: 12px; color: var(--muted); }
+  .read-more { font-size: 12px; font-weight: 600; color: var(--ink); opacity: .4; transition: opacity .2s; }
+  .article-card:hover .read-more { opacity: 1; }
+
+  .no-results { color: var(--muted); grid-column: 1/-1; padding: 40px 0; font-size: 15px; }
+
+  /* ── ABOUT ── */
+  .about-band { background: var(--ink); padding: 88px 56px; }
+
+  .about-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 5fr 7fr; gap: 88px; align-items: start;
+  }
+
+  .about-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 16px;
+  }
+
+  .about-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 52px; font-weight: 800; color: #fff;
+    line-height: 1.0; letter-spacing: -1.5px; margin-bottom: 32px;
+  }
+
+  .about-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .about-tag {
+    padding: 6px 14px;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 100px;
+    font-size: 12px; color: rgba(255,255,255,.55);
+  }
+
+  .about-bio { font-size: 16px; color: rgba(255,255,255,.5); line-height: 1.8; }
+  .about-bio strong { color: rgba(255,255,255,.9); font-weight: 600; }
+  .about-bio p + p { margin-top: 16px; }
+
+  .about-linkedin {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 28px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 100px;
+    padding: 10px 20px;
+    font-size: 13px; font-weight: 600;
+    color: rgba(255,255,255,.7);
+    text-decoration: none;
+    transition: all .2s;
+  }
+
+  .about-linkedin:hover { background: rgba(255,255,255,.15); color: #fff; }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    background: #111B24;
+    padding: 24px 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; color: rgba(255,255,255,.3); }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,.2); }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(27,45,62,.8);
+    z-index: 500;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 48px 24px 88px;
+    overflow-y: auto;
+    opacity: 0; pointer-events: none;
+    transition: opacity .25s;
+    backdrop-filter: blur(6px);
+  }
+
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal-box {
+    background: #fff;
+    border-radius: 14px;
+    max-width: 760px; width: 100%;
+    padding: 56px;
+    position: relative;
+    transform: translateY(28px);
+    transition: transform .28s;
+  }
+
+  .modal-overlay.open .modal-box { transform: translateY(0); }
+
+  .modal-close {
+    position: absolute; top: 20px; right: 20px;
+    width: 38px; height: 38px; border-radius: 50%;
+    border: none; background: var(--bg);
+    cursor: pointer; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); transition: all .2s;
+  }
+
+  .modal-close:hover { background: var(--ink); color: #fff; }
+
+  .modal-cat { margin-bottom: 20px; }
+
+  .modal-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px; font-weight: 800; line-height: 1.1;
+    letter-spacing: -.75px; color: var(--ink); margin-bottom: 8px;
+  }
+
+  .modal-meta {
+    font-size: 13px; color: var(--muted);
+    padding-bottom: 28px; margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modal-body { font-size: 16px; color: #3D4F60; line-height: 1.8; }
+  .modal-body p { margin-bottom: 18px; }
+
+  .modal-body h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 700; color: var(--ink);
+    margin: 32px 0 12px;
+  }
+
+  .modal-body ul { margin: 4px 0 18px 24px; }
+  .modal-body ul li { margin-bottom: 9px; }
+
+  .modal-body .insight {
+    border-left: 3px solid var(--eco);
+    padding: 14px 20px;
+    background: var(--bg);
+    border-radius: 0 6px 6px 0;
+    margin: 28px 0;
+    font-size: 15px; font-style: italic;
+    color: var(--ink); font-weight: 500;
+  }
+
+  .modal-body .question {
+    background: #EFF3FE;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 14px; color: var(--ia);
+    margin-top: 28px; font-weight: 500;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1020px) {
+    .articles-grid { grid-template-columns: 1fr 1fr; }
+    .featured-card { grid-template-columns: 1fr; }
+    .featured-aside { display: none; }
+    .hero { grid-template-columns: 1fr; gap: 32px; }
+    .hero-badges { flex-direction: row; align-items: stretch; }
+    .about-inner { grid-template-columns: 1fr; gap: 40px; }
+    .site-header { padding: 0 24px; }
+    .hero, .filters-bar, .featured-section, .grid-section { padding-left: 24px; padding-right: 24px; }
+    .about-band { padding: 56px 24px; }
+    .site-footer { padding: 20px 24px; }
+  }
+
+  @media (max-width: 640px) {
+    .articles-grid { grid-template-columns: 1fr; }
+    .hero-badges { flex-direction: column; }
+    .featured-card { padding: 32px; }
+    .featured-title { font-size: 22px; }
+    .modal-box { padding: 28px 20px; }
+    .modal-title { font-size: 24px; }
+    .site-nav .nav-label { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <a class="site-logo" href="#">Finance<em> · </em>IA<em> · </em>Économie</a>
+  <ul class="site-nav">
+    <li><a href="#articles" class="nav-label">Articles</a></li>
+    <li><a href="#about" class="nav-label">À propos</a></li>
+    <li><a href="https://www.linkedin.com/in/pascaldray/" target="_blank" rel="noopener" class="nav-cta">LinkedIn ↗</a></li>
+  </ul>
+</header>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div>
+    <p class="hero-eyebrow">Par Pascal Dray — DAF · Docteur en économie</p>
+    <h1 class="hero-title">Décrypter la finance avec le regard de l'économiste.</h1>
+    <p class="hero-desc">Chaque semaine, un éclairage concret sur la finance d'entreprise, la politique économique et la transformation par l'IA — nourri par 30 ans de terrain.</p>
+  </div>
+  <div class="hero-badges">
+    <div class="hero-badge accent-finance">
+      <div class="hero-badge-num">30+</div>
+      <div class="hero-badge-label">ans d'expérience</div>
+    </div>
+    <div class="hero-badge accent-eco">
+      <div class="hero-badge-num">3</div>
+      <div class="hero-badge-label">thèmes clés</div>
+    </div>
+    <div class="hero-badge accent-ia">
+      <div class="hero-badge-num">1</div>
+      <div class="hero-badge-label">article par semaine</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FILTERS ══ -->
+<div class="filters-bar">
+  <span class="filters-label">Thème :</span>
+  <button class="filter-btn active" data-cat="tous" onclick="filterPosts('tous', this)">Tous</button>
+  <button class="filter-btn" data-cat="finance" onclick="filterPosts('finance', this)">💼 Finance</button>
+  <button class="filter-btn" data-cat="eco" onclick="filterPosts('eco', this)">📊 Économie</button>
+  <button class="filter-btn" data-cat="ia" onclick="filterPosts('ia', this)">🤖 IA & Digital</button>
+</div>
+
+<!-- ══ FEATURED ══ -->
+<section class="featured-section" id="articles">
+  <p class="section-eyebrow">À la une</p>
+  <button class="featured-card" onclick="openArticle(1)">
+    <div>
+      <span class="cat-pill finance" id="ft-cat">Finance</span>
+      <h2 class="featured-title" id="ft-title">Reporting à J+3 : le tempo décide de tout</h2>
+      <p class="featured-excerpt" id="ft-excerpt">Un reporting qui arrive 30 jours après la clôture n'est pas un outil de pilotage, c'est un constat d'autopsie. La vitesse de l'information change tout en contrôle de gestion.</p>
+      <span class="featured-cta">Lire l'article →</span>
+    </div>
+    <div class="featured-aside">
+      <div class="big-glyph">J+3<small>REPORTING</small></div>
+    </div>
+  </button>
+</section>
+
+<!-- ══ ARTICLE GRID ══ -->
+<section class="grid-section">
+  <p class="section-eyebrow">Tous les articles</p>
+  <div class="articles-grid" id="articles-grid"></div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section class="about-band" id="about">
+  <div class="about-inner">
+    <div>
+      <p class="about-eyebrow">L'auteur</p>
+      <h2 class="about-name">Pascal Dray</h2>
+      <div class="about-tags">
+        <span class="about-tag">DAF</span>
+        <span class="about-tag">Docteur en économie</span>
+        <span class="about-tag">IFRS · US GAAP</span>
+        <span class="about-tag">IA No-code</span>
+        <span class="about-tag">Coaching financier</span>
+        <span class="about-tag">SAP · JDE · Oracle</span>
+        <span class="about-tag">Start-up</span>
+      </div>
+      <a href="https://www.linkedin.com/in/pascaldray/" target="_blank" rel="noopener" class="about-linkedin">
+        Suivre sur LinkedIn ↗
+      </a>
+    </div>
+    <div class="about-bio">
+      <p><strong>Directeur Financier et Contrôleur de Gestion depuis plus de 30 ans</strong>, Pascal Dray a exercé dans des secteurs aussi variés que l'industrie pharmaceutique, l'équipement automobile, les médias, l'hôtellerie et la restauration — de BOSCH à Elior, en passant par Toyota Handling, Grant Thornton Lafarge et Starkey.</p>
+      <p>Docteur en économie de l'Université Paris-Panthéon Assas, il est l'auteur d'un article de référence sur <strong>l'illusion fiscale</strong> publié dans le <em>Journal des Libertés</em>, et intervenant en Master 2 Marketing. Il accompagne depuis 2010 des start-up et des sociétés en difficulté en tant que <strong>coach financier indépendant</strong>.</p>
+      <p>Ce blog prolonge ses publications LinkedIn et approfondit chaque semaine un sujet opérationnel à l'intersection de la <strong>finance d'entreprise</strong>, de <strong>l'économie politique</strong> et des <strong>outils digitaux et IA</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div class="footer-logo">Finance · IA · Économie</div>
+  <div class="footer-copy">© 2026 Pascal Dray — Tous droits réservés</div>
+</footer>
+
+<!-- ══ MODAL ══ -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="Fermer">✕</button>
+    <div class="modal-cat" id="modal-cat"></div>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <p class="modal-meta" id="modal-meta"></p>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const articles = [
+  {
+    id: 1,
+    cat: 'finance',
+    title: 'Reporting à J+3 : le tempo décide de tout',
+    excerpt: 'La vitesse de l\'information change tout en contrôle de gestion. Un écart détecté à J+3 se corrige dans le mois. À J+30, il n\'est plus qu\'un sujet théorique.',
+    date: '7 juillet 2026',
+    body: `
+      <p>Dans ma carrière de contrôleur de gestion et de directeur financier, une vérité s'est imposée dans tous les secteurs que j'ai traversés : <strong>ce n'est pas la quantité d'information qui pilote une entreprise, c'est sa vitesse.</strong></p>
+      <h3>Le J+3 comme discipline opérationnelle</h3>
+      <p>Sur des missions de clôtures mensuelles en IFRS, j'ai eu l'occasion de mettre en place des processus permettant de rendre un reporting commenté à J+3 — trois jours après la fin du mois. Ce délai n'est pas un exploit technique, c'est une discipline organisationnelle. Il suppose que les équipes comptables, les contrôleurs et les opérationnels travaillent avec des processus alignés et une chaîne de validation courte.</p>
+      <p>À J+3, un écart de marge se corrige dans le mois même. On peut encore agir sur les achats, ajuster la production, alerter une équipe commerciale. À J+30, ce même écart appartient à un trimestre clos : il devient un sujet de réunion, pas de décision.</p>
+      <h3>L'outil ne fait pas le reporting</h3>
+      <p>Il existe une tentation permanente de penser que le bon ERP résout le problème de la vitesse. C'est une illusion. J'ai vu des reportings SAP livrés à J+15 parce que les processus en amont n'étaient pas définis. J'ai aussi vu un tableau de bord construit sous Excel — simple, partagé chaque vendredi — produire plus d'effet sur les décisions opérationnelles que n'importe quel outil sophistiqué.</p>
+      <h3>Consolider 60 sites à J+3 : les conditions nécessaires</h3>
+      <p>Chez Elior, j'ai eu la responsabilité du contrôle de gestion France, couvrant 60 sites et 300 points de vente pour 180 M€ de chiffre d'affaires. La consolidation à J+3 n'a été possible qu'avec trois prérequis : un référentiel de données partagé, des procédures de clôture harmonisées, et des responsables de site formés à la logique de contribution — pas seulement au chiffre d'affaires.</p>
+      <div class="insight">Le meilleur tableau de bord n'est pas le plus complet. C'est celui qui est lu, compris, et qui déclenche une action.</div>
+      <div class="question">Dans votre organisation, combien de temps s'écoule entre la fin d'un mois et la première décision corrective basée sur le reporting ?</div>
+    `
+  },
+  {
+    id: 2,
+    cat: 'finance',
+    title: 'DSO : l\'indicateur qui bat à la même cadence que votre trésorerie',
+    excerpt: 'Un jour de DSO gagné équivaut à une augmentation de capital sans dilution et sans intérêts. Pourquoi reste-t-il si souvent sous-estimé ?',
+    date: '15 juillet 2026',
+    body: `
+      <p>Le DSO — Days Sales Outstanding, ou délai moyen de recouvrement — est probablement l'indicateur financier le plus sous-estimé dans le pilotage des PME et ETI. On le surveille dans les grandes entreprises, et pourtant dans de nombreuses structures, il n'est mesuré qu'une fois par an et jamais traduit en impact trésorerie concret.</p>
+      <h3>Ce que représente vraiment un jour de DSO</h3>
+      <p>Pour une entreprise réalisant 30 M€ de chiffre d'affaires, un jour de DSO représente environ 82 000 € de besoin en fonds de roulement. Réduire le DSO de 10 jours, c'est libérer 820 000 € de trésorerie — sans lever un centime, sans contracter un crédit, sans diluer les actionnaires. C'est pour cette raison que j'ai fait du DSO le premier indicateur de pilotage lors de ma mission chez imagerie.fr, pour une trésorerie de 6 M€ à surveiller sur 10 sites et 3 entités juridiques.</p>
+      <h3>Les trois leviers du recouvrement efficace</h3>
+      <ul>
+        <li><strong>La relance anticipée</strong> : ne pas attendre l'échéance pour contacter le client. Un appel à J-5 avant l'échéance prévient la majorité des retards.</li>
+        <li><strong>Les conditions contractuelles</strong> : revoir les délais de paiement à la signature, introduire des escomptes pour paiement anticipé quand la marge le permet.</li>
+        <li><strong>L'organisation interne</strong> : s'assurer que la facturation est émise immédiatement après la livraison, et que les litiges sont traités rapidement pour ne pas bloquer les règlements.</li>
+      </ul>
+      <h3>La relation bancaire se construit en amont</h3>
+      <p>Un banquier préfère toujours un dirigeant qui anticipe une tension de trésorerie avec un prévisionnel en main, plutôt qu'un dirigeant qui la découvre le vendredi soir en regardant son solde. Dans le premier cas, on négocie. Dans le second, on subit.</p>
+      <div class="insight">La trésorerie n'est pas un sujet de fin de mois. C'est un indicateur à piloter au jour le jour, surtout en multi-sites.</div>
+      <div class="question">Quel est le levier qui a le plus amélioré votre DSO : relance, conditions de paiement, ou organisation interne ?</div>
+    `
+  },
+  {
+    id: 3,
+    cat: 'eco',
+    title: 'La TVA : l\'impôt invisible qui n\'est jamais payé par celui qu\'on croit',
+    excerpt: 'Sur le papier, la TVA est payée par le consommateur final. En réalité, son incidence dépend de l\'élasticité du marché — et cette confusion n\'est pas un hasard.',
+    date: '23 juillet 2026',
+    body: `
+      <p>La TVA est présentée comme un impôt sur la consommation, collecté par les entreprises, supporté par le consommateur final. Cette présentation est techniquement correcte dans son mécanisme de collecte. Elle est économiquement trompeuse dans son analyse de l'incidence réelle.</p>
+      <h3>Qui paie vraiment la TVA ?</h3>
+      <p>L'économie enseigne que l'incidence d'un impôt — c'est-à-dire, qui en supporte réellement le coût — dépend de l'élasticité relative de l'offre et de la demande. Dans un marché où la demande est peu élastique (biens de première nécessité), la TVA peut être répercutée intégralement sur le consommateur. Dans un marché concurrentiel, une partie sera absorbée par les marges des entreprises.</p>
+      <p>En tant que DAF, j'ai souvent constaté que les politiques tarifaires intègrent implicitement la TVA dans l'équation de prix — ce qui signifie qu'une variation du taux de TVA ne se traduit pas toujours par une variation équivalente du prix final.</p>
+      <h3>L'illusion fiscale à l'oeuvre</h3>
+      <p>Dans mon article publié dans le <em>Journal des Libertés</em>, j'analysais comment la structure d'un impôt influe sur la perception des contribuables. La TVA est l'exemple même d'un impôt "intelligent" : elle est indirecte, donc moins visible qu'un prélèvement direct ; elle est collectée en continu, par petites fractions ; et elle est présentée comme étant à la charge d'un tiers, ce qui déresponsabilise politiquement l'État qui la perçoit.</p>
+      <h3>Ce que cela change pour la finance d'entreprise</h3>
+      <p>Comprendre l'incidence réelle d'une variation de TVA — et pas seulement qui signe le chèque à l'administration fiscale — change la façon dont on modélise l'impact sur les marges. C'est particulièrement important lors d'une politique de prix dans un nouveau marché, ou lors d'une analyse de rentabilité produit en environnement multi-pays.</p>
+      <div class="insight">Un coût caché reste un coût. Comprendre comment un impôt se rend invisible est aussi utile en finance d'entreprise qu'en politique fiscale.</div>
+      <div class="question">Dans votre secteur, la TVA est-elle totalement répercutée sur vos prix de vente, ou en partie absorbée par vos marges ?</div>
+    `
+  },
+  {
+    id: 4,
+    cat: 'ia',
+    title: 'ERP et IA : un outil ne corrige jamais un mauvais processus, il l\'automatise en pire',
+    excerpt: 'La transformation digitale en finance commence par une question simple : ce processus, devrait-on encore le faire comme ça ? Avant de se demander avec quel outil.',
+    date: '3 juillet 2026',
+    body: `
+      <p>J'ai accompagné ou piloté plusieurs déploiements d'ERP dans ma carrière — SAP, JDE, Oracle — dans des contextes industriels, médias et de services. Et la même erreur revient avec une régularité troublante : on déploie l'outil avant de revoir le processus. On automatise, et on accélère l'erreur.</p>
+      <h3>Pourquoi les projets ERP échouent</h3>
+      <p>Lors de ma mission chez Inferential en 2026, j'ai piloté la rédaction d'un cahier des charges technique et fonctionnel pour un ERP métier. Cette étape, souvent traitée comme une formalité, est en réalité la plus critique. Elle force à répondre à des questions que personne n'avait encore posées formellement : qui valide quoi, avec quelles données, à quelle fréquence ?</p>
+      <p>La majorité des dérapages dans des projets ERP viennent moins de l'outil que de processus non clarifiés avant le paramétrage. On paramètre en reproduisant ce qu'on faisait avant — parfois avec des workflows conçus pour le papier et l'Excel, pas pour un système intégré.</p>
+      <h3>L'IA no-code : un changement de tempo</h3>
+      <p>Les outils d'IA no-code changent radicalement l'équation. Là où un projet ERP prenait 18 mois, certaines automatisations de reporting ou de détection d'anomalies peuvent aujourd'hui être mises en place en quelques jours. Mais la règle reste immuable : <strong>automatiser un processus inefficace, c'est produire l'erreur plus vite.</strong></p>
+      <h3>Le bon ordre des questions</h3>
+      <p>Avant de choisir un outil, je commence toujours par cartographier les processus existants : qui fait quoi, avec quelles données, à quelle fréquence, pour quelle décision ? Ce travail préalable — souvent perçu comme du temps "perdu" — est celui qui détermine si le projet délivrera de la valeur ou simplement de l'activité.</p>
+      <div class="insight">La transformation digitale en finance commence par une question simple : ce processus, devrait-on encore le faire comme ça ? Avant de se demander avec quel outil.</div>
+      <div class="question">Avez-vous déjà vu un projet ERP capoter pour une raison qui n'avait rien à voir avec l'outil ?</div>
+    `
+  },
+  {
+    id: 5,
+    cat: 'finance',
+    title: 'Restructurer une direction financière : pourquoi le problème n\'est presque jamais comptable',
+    excerpt: 'Quand on m\'appelle pour restructurer une direction financière, les premiers signaux sont rarement dans les chiffres. Ils sont dans la chaîne de décision.',
+    date: '18 juillet 2026',
+    body: `
+      <p>Dans le domaine de la direction financière, "restructurer" signifie le plus souvent quelque chose de fondamental : <strong>rétablir la confiance dans les chiffres.</strong></p>
+      <h3>Les signaux avant-coureurs</h3>
+      <p>Ces symptômes précèdent toujours la crise ouverte : retards de clôture, absence de prévisionnel de trésorerie fiable, reporting non partagé avec la direction générale. Ils signalent une organisation où la chaîne de production de l'information financière est rompue quelque part.</p>
+      <p>Ma première semaine sur ce type de mission, je ne touche pas aux chiffres. Je cartographie qui fait quoi — et surtout, qui décide quoi. La question n'est pas "quels sont les comptes" mais "qui valide les achats, qui autorise les dépenses, qui parle aux banques".</p>
+      <h3>La trésorerie comme outil de pilotage de crise</h3>
+      <p>Dans une situation difficile, la trésorerie réelle — en prévisionnel à 13 semaines — devient le premier outil de pilotage. Un tel outil permet de voir les tensions avant qu'elles ne deviennent des urgences, et de négocier avec les partenaires bancaires en position de force relative, pas en demande.</p>
+      <h3>Reconstruire la confiance</h3>
+      <p>La dimension humaine est toujours sous-estimée dans les missions de restructuration. Reconstruire la confiance — avec les équipes, avec les banques, parfois avec les actionnaires — prend plus de temps que de reconstruire les chiffres. Un compte de résultat peut être corrigé en quelques semaines. Une relation de confiance avec un partenaire bancaire qui a vécu des tensions prend des mois.</p>
+      <div class="insight">Une situation difficile se redresse rarement par un nouvel outil. Elle se redresse par une nouvelle discipline : des chiffres fiables, partagés, à temps.</div>
+      <div class="question">Selon vous, quel est le premier signal, souvent ignoré, qui annonce une difficulté de trésorerie à venir ?</div>
+    `
+  },
+  {
+    id: 6,
+    cat: 'finance',
+    title: 'Budget vs Forecast : lequel pilote vraiment votre entreprise ?',
+    excerpt: 'Un budget voté en décembre n\'a souvent plus aucun sens dès le mois de mars. La vraie valeur du contrôle de gestion n\'est pas de constater l\'écart, c\'est d\'en comprendre la cause.',
+    date: '14 juillet 2026',
+    body: `
+      <p>Le budget annuel est une institution dans la plupart des entreprises. On le prépare dès l'automne, on le présente en comité de direction. Et puis, à partir du mois de mars, les événements réels commencent à s'éloigner de ce qui avait été prévu.</p>
+      <h3>Le budget : un point de repère, pas une boussole</h3>
+      <p>Sur mes missions de contrôle de gestion, j'ai rapidement pris l'habitude de traiter le budget initial comme un point de référence, pas comme un outil de pilotage courant. Ce que je regardais vraiment, c'était le forecast révisé chaque mois : une projection du meilleur de notre connaissance actuelle sur les 3, 6 ou 12 prochains mois. Le forecast intègre ce que le budget ne peut pas intégrer : les décisions prises en cours d'année, les évolutions du marché, les aléas opérationnels.</p>
+      <h3>Le costing : quand les données révèlent ce qu'on ne voulait pas voir</h3>
+      <p>Le costing produit par produit est l'un des exercices les plus révélateurs du contrôle de gestion. Sur plusieurs missions, il a permis de découvrir que certaines références "stratégiques" ou "historiques" étaient en réalité déficitaires depuis des mois — voire des années. La contribution réelle n'était jamais calculée, ou noyée dans une comptabilité analytique trop agrégée pour être lisible.</p>
+      <h3>La valeur réelle du contrôle de gestion</h3>
+      <p>Le rôle du contrôleur de gestion n'est pas de produire des tableaux. C'est d'expliquer les écarts et de pousser à la décision. Un écart de 15% sur une ligne de coûts est une information. Savoir pourquoi — et quoi en faire — c'est là que la valeur se crée.</p>
+      <div class="insight">Un forecast révisé chaque mois vaut mieux qu'un budget annuel sacralisé. Le pilotage, c'est la capacité à se tromper vite et à corriger plus vite encore.</div>
+      <div class="question">Dans votre entreprise, le budget annuel est-il encore un outil de décision, ou simplement un rituel ?</div>
+    `
+  },
+  {
+    id: 7,
+    cat: 'eco',
+    title: 'Colbert, Puviani et les 9 procédés de l\'impôt indolore',
+    excerpt: 'Comment plumer l\'oie en obtenant le maximum de plumes avec le minimum de cris ? Puviani a systématisé les réponses au début du XXe siècle. Elles sont toujours d\'actualité.',
+    date: '23 juillet 2026',
+    body: `
+      <p>C'est Colbert, ministre des Finances de Louis XIV, qui aurait formulé le problème de la fiscalité dans toute sa brutalité : obtenir le plus grand nombre possible de plumes avec le minimum de cris. Trois siècles plus tard, l'économiste italien Amilcare Puviani en a proposé une systématisation remarquablement précise.</p>
+      <h3>Les 9 procédés de Puviani</h3>
+      <p>Dans sa <em>Teoria della illusione finanziaria</em> (1903), Puviani identifiait neuf mécanismes permettant à un gouvernement de maximiser ses recettes fiscales en minimisant la résistance des contribuables :</p>
+      <ul>
+        <li>Préférer les <strong>impôts indirects</strong> aux impôts directs, moins visibles car inclus dans les prix</li>
+        <li>Utiliser des <strong>monopoles d'État</strong> pour prélever indirectement via des prix gonflés</li>
+        <li>Financer les dépenses par la <strong>dette publique</strong> — impôt différé, donc moins ressenti</li>
+        <li>Collecter l'impôt en <strong>petits paiements fréquents</strong> plutôt qu'en un seul versement</li>
+        <li>Faire croire que les recettes de l'État sont indispensables à la <strong>survie des services publics</strong></li>
+        <li>Profiter des <strong>courants populaires</strong> pour créer de nouveaux prélèvements</li>
+        <li>Présenter toute nouvelle taxe comme <strong>temporaire</strong></li>
+        <li>Taxer les <strong>transferts d'actifs</strong> associés à des événements heureux (héritage, cession)</li>
+        <li>Rendre le système fiscal suffisamment <strong>complexe</strong> pour que seuls quelques experts s'y retrouvent</li>
+      </ul>
+      <h3>Un siècle plus tard, la liste n'a pas vieilli</h3>
+      <p>En lisant cette liste aujourd'hui, il est difficile de ne pas reconnaître des mécanismes bien actuels. La TVA répond aux critères 1 et 4. La dette publique est le procédé 3. La complexité du Code général des impôts français illustre le procédé 9.</p>
+      <h3>Ce que cela change pour le DAF</h3>
+      <p>Un directeur financier qui comprend comment la fiscalité construit ses illusions est mieux armé pour évaluer l'impact réel de tout changement réglementaire sur la charge effective de l'entreprise — au-delà de ce que communique l'administration.</p>
+      <div class="insight">Plus d'un siècle après Puviani, les mécanismes qu'il décrivait sont toujours à l'oeuvre. Comprendre comment un coût se rend invisible reste une compétence fondamentale.</div>
+      <div class="question">Dans votre gestion, quel coût a longtemps été "invisible" avant qu'un audit ne le révèle ?</div>
+    `
+  },
+  {
+    id: 8,
+    cat: 'ia',
+    title: 'L\'IA no-code en finance : ce qui marche vraiment sur le terrain',
+    excerpt: 'L\'IA no-code permet d\'automatiser des tâches de reporting en quelques jours. Mais elle amplifie autant ce qui est bien fait que ce qui est mal fait.',
+    date: '10 juillet 2026',
+    body: `
+      <p>En finance d'entreprise, l'intelligence artificielle no-code est passée en quelques années de la promesse à la réalité opérationnelle. Voici ce que j'en retiens de concret — sans enthousiasme béat ni scepticisme de principe.</p>
+      <h3>Ce que l'IA no-code peut réellement faire en finance</h3>
+      <ul>
+        <li><strong>Automatisation des réconciliations</strong> : rapprochement bancaire, réconciliation inter-sociétés, détection d'anomalies dans les flux de facturation. Des tâches qui mobilisaient plusieurs heures par semaine peuvent être automatisées en quelques jours de configuration.</li>
+        <li><strong>Génération de reporting commenté</strong> : à partir de données structurées, des outils d'IA peuvent rédiger un premier commentaire de gestion, identifier les écarts significatifs et formuler des alertes.</li>
+        <li><strong>Prévisions de trésorerie augmentées</strong> : en intégrant des modèles prédictifs basés sur l'historique des comportements clients, la qualité des prévisions à 4-8 semaines s'améliore sensiblement.</li>
+      </ul>
+      <h3>Les conditions de la réussite</h3>
+      <p>Ces outils ne fonctionnent bien que si deux conditions préalables sont réunies. D'abord, la donnée source doit être propre et fiable : l'IA amplifie ce qui est bien fait comme ce qui est mal fait. Ensuite, le processus sous-jacent doit être clairement défini. On ne peut pas demander à un outil d'automatiser ce qu'on n'a jamais formalisé.</p>
+      <h3>Ce que l'IA ne remplace pas</h3>
+      <p>Le jugement du contrôleur de gestion reste irremplaçable pour interpréter un écart dans son contexte et formuler une recommandation à la direction. L'IA traite les données. Le contrôleur de gestion traite le sens.</p>
+      <div class="insight">L'IA no-code n'est pas un raccourci pour contourner un processus mal défini. C'est un accélérateur pour un processus déjà bien conçu.</div>
+      <div class="question">Avez-vous déjà mis en place un outil d'IA dans vos processus financiers ? Qu'est-ce qui a le mieux fonctionné ?</div>
+    `
+  },
+  {
+    id: 9,
+    cat: 'finance',
+    title: 'Résultat net et trésorerie : l\'un raconte le passé, l\'autre décide de votre avenir',
+    excerpt: 'J\'ai vu des entreprises afficher un résultat positif tout en étant incapables de régler leurs charges sociales le mois suivant. Ce n\'est pas une anomalie — c\'est une réalité opérationnelle.',
+    date: '28 juillet 2026',
+    body: `
+      <p>Le résultat net est un concept comptable. La trésorerie est une réalité physique. Le premier peut être positif et flatteur pendant que la seconde est négative et mortelle.</p>
+      <h3>La confusion qui coûte cher</h3>
+      <p>Un résultat bénéficiaire ne paie pas les salaires. Il ne règle pas la TVA de décembre. Il ne rembourse pas le capital d'un emprunt. La trésorerie, elle, fait tout cela — ou ne le fait pas, ce qui entraîne des pénalités, des tensions avec les fournisseurs, et parfois la procédure collective.</p>
+      <p>Le décalage entre résultat et trésorerie a plusieurs sources classiques : le BFR (stocks, créances clients, dettes fournisseurs), les investissements qui sortent en trésorerie mais s'amortissent sur plusieurs années, les dettes fiscales et sociales dont les échéances sont décalées.</p>
+      <h3>Le prévisionnel à 13 semaines : l'outil sous-utilisé</h3>
+      <p>Le prévisionnel de trésorerie glissant, mis à jour chaque semaine sur un horizon de 13 semaines, reste l'outil le plus sous-utilisé dans les PME alors qu'il coûte une fraction du prix d'un ERP. Avec un tel outil en place, les obligations fiscales et sociales cessent d'être des surprises : elles apparaissent à l'horizon, suffisamment tôt pour être anticipées ou négociées.</p>
+      <h3>La relation bancaire se construit en amont</h3>
+      <p>Un banquier préfère toujours un dirigeant qui anticipe une tension de trésorerie et vient en parler à l'avance, avec un prévisionnel en main. Dans le premier cas, on négocie. Dans le second, on subit.</p>
+      <div class="insight">Le résultat raconte le passé. La trésorerie prévisionnelle raconte l'avenir — et c'est elle qui décide si l'entreprise tient le trimestre suivant.</div>
+      <div class="question">Avez-vous un prévisionnel de trésorerie glissant à 13 semaines, ou seulement un budget annuel ?</div>
+    `
+  },
+  {
+    id: 10,
+    cat: 'finance',
+    title: 'Start-up et pilotage financier : mourir non par manque de produit, mais par manque de chiffres',
+    excerpt: 'La plupart des start-up ne meurent pas d\'un mauvais produit. Elles meurent d\'une mauvaise gestion du cash, d\'un point mort jamais calculé, et d\'une levée de fonds confondue avec la rentabilité.',
+    date: '25 juillet 2026',
+    body: `
+      <p>Depuis 2010, j'accompagne des dirigeants de start-up en tant que coach financier. Ce double regard m'a convaincu d'une chose : les problèmes financiers des start-up et des grandes entreprises ont la même nature, mais des délais de manifestation très différents.</p>
+      <h3>La confusion entre levée de fonds et rentabilité</h3>
+      <p>L'erreur la plus fréquente que j'observe chez les fondateurs est de confondre la levée de fonds avec la preuve que le modèle économique fonctionne. Une levée de fonds prouve que des investisseurs croient au potentiel. Elle ne prouve pas que l'unité économique est saine — que chaque client génère plus qu'il ne coûte à acquérir et à servir.</p>
+      <p>J'ai vu des projets lever des montants significatifs et disparaître 18 mois plus tard, non pas parce que le produit était mauvais, mais parce que le coût d'acquisition client n'avait jamais été rapproché de la valeur vie client.</p>
+      <h3>Calculer son point mort : l'exercice fondateur</h3>
+      <p>Le point mort — le niveau de chiffre d'affaires à partir duquel les charges fixes sont couvertes — est la première question de survie d'une start-up. C'est une boussole stratégique : elle dit combien de clients il faut signer, à quel prix, avec quel coût de service, pour atteindre l'équilibre — et donc de combien de mois de runway on dispose à chaque stade.</p>
+      <h3>Le rôle du coach financier</h3>
+      <p>Mon rôle n'est pas de faire à la place du dirigeant, mais de lui donner les clés de lecture pour qu'il décide en connaissance de cause. Un fondateur qui comprend son P&L, son BFR, son coût d'acquisition et sa valeur vie client prend de meilleures décisions que celui qui délègue entièrement ces sujets — même à un excellent CFO.</p>
+      <div class="insight">Une start-up qui maîtrise son cash et son point mort a plus de chances de survivre qu'une start-up qui maîtrise parfaitement son produit mais pas ses chiffres.</div>
+      <div class="question">Avez-vous déjà vu un projet solide capoter uniquement par manque de pilotage financier ?</div>
+    `
+  }
+];
+
+const catLabels = { finance: '💼 Finance', eco: '📊 Économie', ia: '🤖 IA & Digital' };
+
+function openArticle(id) {
+  const article = articles.find(a => a.id === id);
+  if (!article) return;
+  document.getElementById('modal-cat').innerHTML =
+    '<span class="cat-pill-sm ' + article.cat + '">' + catLabels[article.cat] + '</span>';
+  document.getElementById('modal-title').textContent = article.title;
+  document.getElementById('modal-meta').textContent = 'Publié le ' + article.date + ' · par Pascal Dray';
+  document.getElementById('modal-body').innerHTML = article.body;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+function renderGrid(filter) {
+  const grid = document.getElementById('articles-grid');
+  const pool = articles.slice(1); // exclude featured (id=1)
+  const list = filter === 'tous' ? pool : pool.filter(a => a.cat === filter);
+
+  if (list.length === 0) {
+    grid.innerHTML = '<p class="no-results">Aucun article dans cette catégorie pour l\'instant.</p>';
+    return;
+  }
+
+  grid.innerHTML = list.map(function(a) {
+    return '<button class="article-card ' + a.cat + '" onclick="openArticle(' + a.id + ')">' +
+      '<span class="cat-pill-sm ' + a.cat + '">' + catLabels[a.cat] + '</span>' +
+      '<h3 class="article-title">' + a.title + '</h3>' +
+      '<p class="article-excerpt">' + a.excerpt + '</p>' +
+      '<div class="article-footer">' +
+        '<span class="article-date">' + a.date + '</span>' +
+        '<span class="read-more">Lire →</span>' +
+      '</div>' +
+    '</button>';
+  }).join('');
+}
+
+function filterPosts(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderGrid(cat);
+}
+
+// Init
+renderGrid('tous');
+</script>
+
+</body>
+</html>
