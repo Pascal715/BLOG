@@ -289,6 +289,70 @@
 
   .no-results { color: var(--muted); grid-column: 1/-1; padding: 40px 0; font-size: 15px; }
 
+  /* ── CARD COVERS ── */
+  .card-cover {
+    height: 210px;
+    margin: -28px -28px 22px -28px;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 76px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .card-cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 75% 25%, rgba(255,255,255,.12) 0%, transparent 65%);
+    z-index: 0;
+  }
+
+  .card-cover::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; right: -20px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.05);
+    z-index: 0;
+  }
+
+  .card-cover span { position: relative; z-index: 1; filter: drop-shadow(0 4px 12px rgba(0,0,0,.25)); }
+
+  .card-cover.finance { background: linear-gradient(135deg, #0B2918 0%, #155C35 55%, #27935A 100%); }
+  .card-cover.eco     { background: linear-gradient(135deg, #4A1A00 0%, #8A3A10 55%, #C96315 100%); }
+  .card-cover.ia      { background: linear-gradient(135deg, #0D1B4A 0%, #1E3A8A 55%, #4875D8 100%); }
+
+  /* ── MODAL COVER ── */
+  .modal-cover {
+    height: 280px;
+    margin: -56px -56px 36px -56px;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .modal-cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 70% 30%, rgba(255,255,255,.12) 0%, transparent 60%);
+  }
+
+  .modal-cover span { position: relative; z-index: 1; filter: drop-shadow(0 6px 16px rgba(0,0,0,.3)); }
+
+  .modal-cover.finance { background: linear-gradient(135deg, #0B2918 0%, #155C35 55%, #27935A 100%); }
+  .modal-cover.eco     { background: linear-gradient(135deg, #4A1A00 0%, #8A3A10 55%, #C96315 100%); }
+  .modal-cover.ia      { background: linear-gradient(135deg, #0D1B4A 0%, #1E3A8A 55%, #4875D8 100%); }
+
   /* ── ABOUT ── */
   .about-band { background: var(--ink); padding: 88px 56px; }
 
@@ -508,7 +572,7 @@
       <span class="featured-cta">Lire l'article →</span>
     </div>
     <div class="featured-aside">
-      <div class="big-glyph">J+3<small>REPORTING</small></div>
+      <div style="font-size:140px;filter:drop-shadow(0 8px 24px rgba(0,0,0,.4));opacity:.85;line-height:1;">📊</div>
     </div>
   </button>
 </section>
@@ -568,6 +632,7 @@ const articles = [
   {
     id: 1,
     cat: 'finance',
+    cover: '📊',
     title: 'Reporting à J+3 : le tempo décide de tout',
     excerpt: 'La vitesse de l\'information change tout en contrôle de gestion. Un écart détecté à J+3 se corrige dans le mois. À J+30, il n\'est plus qu\'un sujet théorique.',
     date: '7 juillet 2026',
@@ -587,6 +652,7 @@ const articles = [
   {
     id: 2,
     cat: 'finance',
+    cover: '💵',
     title: 'DSO : l\'indicateur qui bat à la même cadence que votre trésorerie',
     excerpt: 'Un jour de DSO gagné équivaut à une augmentation de capital sans dilution et sans intérêts. Pourquoi reste-t-il si souvent sous-estimé ?',
     date: '15 juillet 2026',
@@ -609,6 +675,7 @@ const articles = [
   {
     id: 3,
     cat: 'eco',
+    cover: '🧾',
     title: 'La TVA : l\'impôt invisible qui n\'est jamais payé par celui qu\'on croit',
     excerpt: 'Sur le papier, la TVA est payée par le consommateur final. En réalité, son incidence dépend de l\'élasticité du marché — et cette confusion n\'est pas un hasard.',
     date: '23 juillet 2026',
@@ -628,6 +695,7 @@ const articles = [
   {
     id: 4,
     cat: 'ia',
+    cover: '⚙️',
     title: 'ERP et IA : un outil ne corrige jamais un mauvais processus, il l\'automatise en pire',
     excerpt: 'La transformation digitale en finance commence par une question simple : ce processus, devrait-on encore le faire comme ça ? Avant de se demander avec quel outil.',
     date: '3 juillet 2026',
@@ -647,6 +715,7 @@ const articles = [
   {
     id: 5,
     cat: 'finance',
+    cover: '🔧',
     title: 'Restructurer une direction financière : pourquoi le problème n\'est presque jamais comptable',
     excerpt: 'Quand on m\'appelle pour restructurer une direction financière, les premiers signaux sont rarement dans les chiffres. Ils sont dans la chaîne de décision.',
     date: '18 juillet 2026',
@@ -666,6 +735,7 @@ const articles = [
   {
     id: 6,
     cat: 'finance',
+    cover: '📅',
     title: 'Budget vs Forecast : lequel pilote vraiment votre entreprise ?',
     excerpt: 'Un budget voté en décembre n\'a souvent plus aucun sens dès le mois de mars. La vraie valeur du contrôle de gestion n\'est pas de constater l\'écart, c\'est d\'en comprendre la cause.',
     date: '14 juillet 2026',
@@ -684,6 +754,7 @@ const articles = [
   {
     id: 7,
     cat: 'eco',
+    cover: '🏛️',
     title: 'Colbert, Puviani et les 9 procédés de l\'impôt indolore',
     excerpt: 'Comment plumer l\'oie en obtenant le maximum de plumes avec le minimum de cris ? Puviani a systématisé les réponses au début du XXe siècle. Elles sont toujours d\'actualité.',
     date: '23 juillet 2026',
@@ -713,6 +784,7 @@ const articles = [
   {
     id: 8,
     cat: 'ia',
+    cover: '🤖',
     title: 'L\'IA no-code en finance : ce qui marche vraiment sur le terrain',
     excerpt: 'L\'IA no-code permet d\'automatiser des tâches de reporting en quelques jours. Mais elle amplifie autant ce qui est bien fait que ce qui est mal fait.',
     date: '10 juillet 2026',
@@ -735,6 +807,7 @@ const articles = [
   {
     id: 9,
     cat: 'finance',
+    cover: '💰',
     title: 'Résultat net et trésorerie : l\'un raconte le passé, l\'autre décide de votre avenir',
     excerpt: 'J\'ai vu des entreprises afficher un résultat positif tout en étant incapables de régler leurs charges sociales le mois suivant. Ce n\'est pas une anomalie — c\'est une réalité opérationnelle.',
     date: '28 juillet 2026',
@@ -754,6 +827,7 @@ const articles = [
   {
     id: 10,
     cat: 'finance',
+    cover: '🚀',
     title: 'Start-up et pilotage financier : mourir non par manque de produit, mais par manque de chiffres',
     excerpt: 'La plupart des start-up ne meurent pas d\'un mauvais produit. Elles meurent d\'une mauvaise gestion du cash, d\'un point mort jamais calculé, et d\'une levée de fonds confondue avec la rentabilité.',
     date: '25 juillet 2026',
@@ -774,6 +848,7 @@ const articles = [
   {
     id: 11,
     cat: 'ia',
+    cover: '🔍',
     title: 'L\'IA et l\'asymétrie d\'information : quand l\'algorithme change les règles du jeu entre le DAF, le marché et l\'État',
     excerpt: 'George Akerlof a reçu le Nobel pour avoir démontré que les marchés dysfonctionnent quand les parties n\'ont pas accès aux mêmes informations. L\'IA est en train de bouleverser cette équation — avec des conséquences directes pour le DAF.',
     date: '18 juillet 2026',
@@ -814,7 +889,9 @@ function openArticle(id) {
     '<span class="cat-pill-sm ' + article.cat + '">' + catLabels[article.cat] + '</span>';
   document.getElementById('modal-title').textContent = article.title;
   document.getElementById('modal-meta').textContent = 'Publié le ' + article.date + ' · par Pascal Dray';
-  document.getElementById('modal-body').innerHTML = article.body;
+  document.getElementById('modal-body').innerHTML =
+    '<div class="modal-cover ' + article.cat + '"><span>' + (article.cover || '📄') + '</span></div>' +
+    article.body;
   document.getElementById('modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -842,6 +919,7 @@ function renderGrid(filter) {
 
   grid.innerHTML = list.map(function(a) {
     return '<button class="article-card ' + a.cat + '" onclick="openArticle(' + a.id + ')">' +
+      '<div class="card-cover ' + a.cat + '"><span>' + (a.cover || '📄') + '</span></div>' +
       '<span class="cat-pill-sm ' + a.cat + '">' + catLabels[a.cat] + '</span>' +
       '<h3 class="article-title">' + a.title + '</h3>' +
       '<p class="article-excerpt">' + a.excerpt + '</p>' +
