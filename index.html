@@ -770,6 +770,39 @@ const articles = [
       <div class="question">Avez-vous déjà vu un projet solide capoter uniquement par manque de pilotage financier ?</div>
     `
   }
+  ,
+  {
+    id: 11,
+    cat: 'ia',
+    title: 'L\'IA et l\'asymétrie d\'information : quand l\'algorithme change les règles du jeu entre le DAF, le marché et l\'État',
+    excerpt: 'George Akerlof a reçu le Nobel pour avoir démontré que les marchés dysfonctionnent quand les parties n\'ont pas accès aux mêmes informations. L\'IA est en train de bouleverser cette équation — avec des conséquences directes pour le DAF.',
+    date: '18 juillet 2026',
+    body: `
+      <p>En 2001, George Akerlof reçoit le prix Nobel d'économie pour un article écrit trente ans plus tôt sur le marché des voitures d'occasion. Sa démonstration est d'une simplicité dévastatrice : quand le vendeur en sait plus que l'acheteur sur la qualité du bien échangé, le marché dysfonctionne. Les mauvaises voitures chassent les bonnes. C'est ce qu'on appelle l'asymétrie d'information — et c'est l'un des problèmes centraux de toute l'économie financière.</p>
+      <p>Quarante ans plus tard, l'intelligence artificielle est en train de réduire cette asymétrie à une vitesse sans précédent. Et cela change profondément les règles du jeu pour le directeur financier.</p>
+
+      <h3>L'asymétrie d'information : le problème central de la finance d'entreprise</h3>
+      <p>Le DAF vit dans l'asymétrie d'information en permanence. Il en sait plus que la banque sur la santé réelle de l'entreprise — mais moins que l'opérationnel sur ce qui se passe vraiment sur le terrain. Il en sait plus que l'investisseur sur les risques cachés du bilan — mais moins que le marché sur le coût du capital à venir. Toute sa valeur tient précisément dans sa capacité à réduire ces écarts : produire une information fiable, la partager au bon moment, et interpréter celle qu'il reçoit.</p>
+      <p>Or l'IA modifie cette équation sur trois fronts simultanément.</p>
+
+      <h3>Ce que l'IA change concrètement pour le DAF</h3>
+      <p>Premièrement, elle réduit l'asymétrie interne. Les outils d'IA no-code permettent aujourd'hui de croiser en temps réel des données qui étaient auparavant siloées — achats, ventes, trésorerie, stocks — et de détecter des anomalies ou des tendances que personne n'aurait identifiées manuellement. Le DAF voit plus, plus vite, avec moins de ressources.</p>
+      <p>Deuxièmement, elle réduit l'asymétrie externe. Les modèles de scoring de crédit, les outils de veille concurrentielle augmentée, les algorithmes de prévision de défaillance fournisseur : autant d'outils qui donnent au DAF un accès à une information sur ses contreparties qui était jusqu'ici réservée aux grandes institutions financières.</p>
+      <p>Troisièmement — et c'est le point le plus délicat — l'IA réduit l'asymétrie entre l'entreprise et l'État. Les administrations fiscales de nombreux pays (dont la France avec la facturation électronique obligatoire dès 2026) utilisent déjà des algorithmes pour croiser les données déclarées et détecter les incohérences. Ce que le DAF savait être une zone grise devient, dans un environnement de données massives, une zone de risque bien éclairée.</p>
+
+      <h3>La nouvelle asymétrie : entre ceux qui maîtrisent l'IA et les autres</h3>
+      <p>Mais l'IA ne supprime pas l'asymétrie d'information — elle la déplace. Elle crée une nouvelle fracture, cette fois entre les organisations qui maîtrisent ces outils et celles qui ne les ont pas encore adoptés. Une PME dont le DAF pilote à la trésorerie J+30 et au budget annuel fait face à des concurrents, des banques et une administration qui, eux, opèrent déjà en temps réel.</p>
+      <p>C'est exactement le même mécanisme qu'Akerlof décrivait : celui qui dispose de l'information la meilleure impose ses conditions. La différence, c'est que l'information n'est plus réservée aux plus grandes structures. Elle est accessible — à condition de savoir la produire et l'interpréter.</p>
+
+      <h3>Ce que l'humain conserve — et doit conserver</h3>
+      <p>L'IA traite des données. Elle ne traite pas le contexte, l'histoire, la relation, le jugement. Un algorithme peut détecter qu'un client paie systématiquement en retard. Seul le DAF sait si ce client traverse une difficulté conjoncturelle qu'il vaut mieux accompagner, ou s'il manifeste un comportement structurel qui justifie une révision des conditions commerciales.</p>
+      <p>Le DAF de demain n'est pas celui qui produit le plus d'information. C'est celui qui sait, dans un environnement saturé de données, identifier ce qui est signal et ce qui est bruit — et transformer cette lecture en décision.</p>
+
+      <div class="insight">L'IA réduit l'asymétrie d'information entre le DAF et ses interlocuteurs. Mais elle crée une nouvelle asymétrie — entre ceux qui la maîtrisent et ceux qui ne l'ont pas encore intégrée dans leur pilotage.</div>
+
+      <div class="question">Dans votre organisation, l'IA a-t-elle déjà changé la façon dont vous produisez ou interprétez l'information financière ? Ou le sujet est-il encore au stade de la réflexion ?</div>
+    `
+  }
 ];
 
 const catLabels = { finance: '💼 Finance', eco: '📊 Économie', ia: '🤖 IA & Digital' };
@@ -828,6 +861,7 @@ function filterPosts(cat, btn) {
 
 // Init
 renderGrid('tous');
+
 </script>
 
 </body>
