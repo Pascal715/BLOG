@@ -843,8 +843,7 @@ const articles = [
       <div class="insight">Une start-up qui maîtrise son cash et son point mort a plus de chances de survivre qu'une start-up qui maîtrise parfaitement son produit mais pas ses chiffres.</div>
       <div class="question">Avez-vous déjà vu un projet solide capoter uniquement par manque de pilotage financier ?</div>
     `
-  }
-  ,
+  },
   {
     id: 11,
     cat: 'ia',
@@ -877,10 +876,42 @@ const articles = [
 
       <div class="question">Dans votre organisation, l'IA a-t-elle déjà changé la façon dont vous produisez ou interprétez l'information financière ? Ou le sujet est-il encore au stade de la réflexion ?</div>
     `
-  }
-];
+  },
+  {
+    id: 12,
+    cat: 'eco',
+    cover: '📈',
+    title: 'L\'inflation : l\'impôt que personne n\'a voté — et ce que le DAF doit faire dès maintenant',
+    excerpt: 'Milton Friedman disait que l\'inflation est une taxation sans représentation. Pour le directeur financier, c\'est aussi la plus sournoise des charges : elle érode les marges, gonfle le BFR et détruit la valeur sans apparaître sur aucune ligne du compte de résultat.',
+    date: '23 juillet 2026',
+    body: `
+      <p>Milton Friedman l'avait formulé avec une clarté cinglante : <strong>l'inflation est une taxation sans représentation.</strong> Personne ne l'a votée. Personne ne la déclare. Et pourtant, elle prélève, chaque mois, sur la valeur réelle des actifs, des marges et des salaires — avec une efficacité redoutable. C'est, dans la terminologie de Puviani que j'analysais dans mon article sur l'illusion fiscale, le procédé le plus sophistiqué de l'État : un impôt collecté en continu, sans signature, sans ligne budgétaire, et que personne n'impute directement à une décision politique.</p>
+      <p>Pour le directeur financier, l'inflation n'est pas seulement un phénomène macroéconomique à commenter lors du comité de direction. C'est une variable opérationnelle qui reconfigure silencieusement chaque ligne de son bilan.</p>
 
-const catLabels = { finance: '💼 Finance', eco: '📊 Économie', ia: '🤖 IA & Digital' };
+      <h3>Ce que l'inflation fait concrètement au bilan d'une PME</h3>
+      <p>L'erreur classique est de traiter l'inflation uniquement comme un problème de prix de vente. C'est n'en voir que la surface. En réalité, elle agit simultanément sur quatre leviers du bilan que le DAF doit surveiller de front.</p>
+      <p>Premièrement, <strong>les marges se compriment avant même que les prix augmentent</strong>. Le coût des matières premières, de l'énergie et des transports monte immédiatement. La répercussion sur les prix de vente, elle, prend du temps — le temps de renégocier les contrats, de convaincre les clients, de réviser les catalogues. Dans cet intervalle, la marge absorbe le choc.</p>
+      <p>Deuxièmement, <strong>le besoin en fonds de roulement gonfle mécaniquement</strong>. Si le même volume d'activité coûte 15 % de plus à financer, le BFR augmente de 15 % sans que l'entreprise ait investi un centime supplémentaire. Cela signifie plus de crédit court terme, à des taux eux-mêmes tirés vers le haut par la politique monétaire.</p>
+      <p>Troisièmement, <strong>la dette se rembourse en monnaie dépréciée</strong> — ce qui est un avantage pour les entreprises endettées à taux fixe. Mais c'est l'inverse pour celles qui ont des dettes à taux variable : elles subissent simultanément la hausse des coûts d'exploitation et la hausse du coût de leur financement.</p>
+      <p>Quatrièmement, <strong>les actifs immobilisés sont sous-évalués</strong>. Une machine achetée il y a cinq ans est amortie à son coût historique. Son remplacement coûtera 30 % de plus. La dotation aux amortissements ne couvre donc plus le renouvellement réel de l'outil productif — ce que les économistes appellent la dépréciation du capital en valeur de remplacement.</p>
+
+      <h3>Ce que l'IA permet de modéliser que l'Excel ne peut pas faire</h3>
+      <p>Face à ces quatre effets simultanés, la modélisation financière traditionnelle montre ses limites. Un tableau Excel peut intégrer une hypothèse d'inflation linéaire. Il ne peut pas facilement modéliser des inflations différenciées par poste de charge, des délais de répercussion variables selon les segments clients, ou des scénarios de corrélation entre taux d'inflation et taux d'intérêt.</p>
+      <p>C'est précisément là que les outils d'IA no-code apportent une valeur réelle. J'ai eu l'occasion de travailler sur des modèles de simulation où l'IA intègre des données macroéconomiques en temps réel (indices des prix, taux directeurs, cours des matières premières) et les propage automatiquement dans les états financiers prévisionnels. Le résultat n'est pas une prévision parfaite — personne ne prédit l'inflation avec précision. C'est une capacité à tester rapidement une dizaine de scénarios et à identifier les seuils critiques : à partir de quel niveau d'inflation la marge passe sous le seuil de viabilité ? À partir de quand le BFR dépasse la capacité de financement court terme ?</p>
+
+      <h3>La stratégie du DAF en environnement inflationniste</h3>
+      <p>Face à l'inflation, le DAF a quatre leviers d'action concrets, à activer dans un ordre précis.</p>
+      <p><strong>Réviser les clauses d'indexation</strong> dans tous les contrats clients et fournisseurs — en priorité sur les contrats longs. Une clause d'indexation mal rédigée peut coûter des points de marge pendant des années.</p>
+      <p><strong>Accélérer les encaissements</strong> : en période inflationniste, un euro encaissé aujourd'hui vaut plus qu'un euro encaissé dans 60 jours. La réduction du DSO n'est plus seulement un enjeu de trésorerie, c'est un enjeu de valeur réelle.</p>
+      <p><strong>Renégocier les conditions de financement</strong> avant que les taux montent davantage, en cherchant à fixer un maximum de dette à taux fixe sur des durées longues.</p>
+      <p><strong>Mettre à jour les prix de revient</strong> — idéalement en temps réel. Un costing fondé sur des données vieilles de six mois dans un environnement inflationniste conduit à des décisions commerciales erronées : on vend à perte sans le savoir.</p>
+
+      <div class="insight">L'inflation est l'impôt le plus difficile à défendre politiquement — et le plus facile à prélever silencieusement. Pour le DAF, la comprendre comme une variable de bilan et non comme un simple contexte macroéconomique est la première ligne de défense.</div>
+
+      <div class="question">Dans votre entreprise, avez-vous des clauses d'indexation dans vos contrats clients ? Et votre costing est-il mis à jour au rythme de l'inflation de vos coûts ?</div>
+    `
+  }
+]; = { finance: '💼 Finance', eco: '📊 Économie', ia: '🤖 IA & Digital' };
 
 function openArticle(id) {
   const article = articles.find(a => a.id === id);
