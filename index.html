@@ -911,7 +911,9 @@ const articles = [
       <div class="question">Dans votre entreprise, avez-vous des clauses d'indexation dans vos contrats clients ? Et votre costing est-il mis à jour au rythme de l'inflation de vos coûts ?</div>
     `
   }
-]; = { finance: '💼 Finance', eco: '📊 Économie', ia: '🤖 IA & Digital' };
+];
+
+const catLabels = { finance: '💼 Finance', eco: '📊 Économie', ia: '🤖 IA & Digital' };
 
 function openArticle(id) {
   const article = articles.find(a => a.id === id);
